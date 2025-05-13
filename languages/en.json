@@ -1,3 +1,8 @@
 {
-    "MODULE.hello": "hello"
+    "NP.ColorDefaultName": "Default permission icon color",
+    "NP.ColorDefaultHint": "Color used for the icon representing the effective default permission on a note.",
+    "NP.SizeDefaultName": "Default permission icon size",
+    "NP.SizeDefaultHint": "Size of the icon shown above the note to indicate the default permission level.",
+    "NP.SizePlayerName": "Player permission icon size",
+    "NP.SizePlayerHint": "Size of the icons shown below the note for each player with a custom permission level."
 }

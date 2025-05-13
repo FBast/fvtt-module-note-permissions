@@ -1,14 +1,13 @@
 {
-  "id": "module",
-  "title": "New Module",
-  "description": "",
+  "id": "note-permissions",
+  "title": "Note Permissions",
+  "description": "Displays custom permission icons above and below journal notes on the canvas. Shows default access level and individual user overrides with configurable SVG icons and sizes.",
   "version": "#{VERSION}#",
   "library": "false",
-  "manifestPlusVersion": "1.2.0",
   "compatibility": {
     "minimum": 10,
-    "verified": 10,
-    "maximum": 11
+    "verified": 12,
+    "maximum": 12
   },
   "authors": [
     {
