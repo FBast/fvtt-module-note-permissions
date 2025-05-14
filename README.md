@@ -30,19 +30,14 @@
 ## Settings
 
 - **Default Icon Color** – Sets the tint for the default permission icon.  
-  _(Key: `NP.ColorDefaultName`)_
-
 - **Default Icon Size** – Size in pixels for the default permission icon.  
-  _(Key: `NP.SizeDefaultName`)_
-
 - **Player Icon Size** – Size in pixels for user-specific icons.  
-  _(Key: `NP.SizePlayerName`)_
 
 All settings are **world-scoped** and visible to GMs only.
 
 ## Compatibility
 
-- ✅ Compatible with Foundry VTT **v12+**
+- ✅ Compatible with Foundry VTT **v12**
 - 🎲 System-agnostic
 - 🧩 Designed for `JournalEntryPage`
 
