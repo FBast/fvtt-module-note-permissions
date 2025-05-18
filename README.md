@@ -4,6 +4,8 @@
 
 **Note Permissions** is a lightweight Foundry VTT module that displays visual permission indicators directly above and below journal notes on the canvas. Designed for Game Masters, it offers a clear overview of who has access to what, using customizable SVG icons.
 
+![Screenshot](https://github.com/user-attachments/assets/8b4bbadc-0ca2-4b88-b7af-26d2bfc50e30)
+
 ## Features
 
 - Automatically shows a **default permission icon** above each note based on the effective access level (page + entry).
