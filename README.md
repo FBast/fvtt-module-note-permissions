@@ -19,8 +19,10 @@
 - Purely cosmetic and non-intrusive: no system overrides or journal modifications.
 
 ## Installation
-
+1. Install the module using the Foundry Add-on Modules menu.
+#### Or
 1. Download and unzip the module into your `FoundryVTT/Data/modules` folder.
+#### Then
 2. Enable the module via `Settings > Manage Modules`.
 3. Configure your preferred icon sizes and default color in `Settings > Module Settings > Note Permissions`.
 
