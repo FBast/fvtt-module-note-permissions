@@ -1,4 +1,4 @@
-import { MODULE_ID, ICON_PERMISSIONS, SETTINGS, getCustomUserIds, getEffectivePermission } from "./helpers.js";
+import { MODULE_ID, ICON_PERMISSIONS, SETTINGS, getEffectivePermission, getUsersWithExplicitPerm } from "./helpers.js";
 
 console.log("Note Permissions | loaded");
 
@@ -31,15 +31,12 @@ function registerSettings() {
     });
 }
 
-function updateNoteFlags(note) {
-    const customUserIds = getCustomUserIds(note);
-    return note.setFlag(MODULE_ID, "customUserIds", customUserIds);
-}
-
-function drawCustomPermissionIcons(note) {
+function drawIcons(note) {
     if (!game.user.isGM) return;
 
-    note.children.filter(c => c.name?.startsWith("note-permissions-")).forEach(c => c.destroy());
+    note.children
+        .filter(c => c.name?.startsWith("note-permissions-"))
+        .forEach(c => c.destroy());
 
     const iconSize = note.document.iconSize;
     const spacing = 18;
@@ -51,9 +48,11 @@ function drawCustomPermissionIcons(note) {
 
     const page = note.page;
     const entry = game.journal.get(note.document.entryId);
+
     const effectivePerm = getEffectivePermission(page, entry);
     const iconPath = ICON_PERMISSIONS[effectivePerm];
 
+    // Default icon
     if (iconPath) {
         const tex = PIXI.Texture.from(iconPath);
         const icon = new PIXI.Sprite(tex);
@@ -66,56 +65,39 @@ function drawCustomPermissionIcons(note) {
         note.addChild(icon);
     }
 
-    const customUserIds = note.document.getFlag(MODULE_ID, "customUserIds") || [];
-    const validUserIds = customUserIds.filter(userId => {
-        const perm = note.page.ownership?.[userId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE;
-        return ICON_PERMISSIONS[perm];
-    });
+    // Per-user icons
+    const users = getUsersWithExplicitPerm(page, entry);
+    const totalWidth = (users.length - 1) * spacing;
 
-    const totalFlagsWidth = (validUserIds.length - 1) * spacing;
+    users.forEach((u, i) => {
+        const perm = page.ownership?.[u.id] ?? effectivePerm;
+        const path = ICON_PERMISSIONS[perm];
+        if (!path) return;
 
-    validUserIds.forEach((userId, index) => {
-        const user = game.users.get(userId);
-        if (!user) return;
+        const tex = PIXI.Texture.from(path);
+        const sprite = new PIXI.Sprite(tex);
 
-        const perm = note.page.ownership?.[userId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE;
-        const iconPath = ICON_PERMISSIONS[perm];
-        if (!iconPath) return;
+        sprite.tint = PIXI.utils.string2hex(u.color || "#ffffff");
+        sprite.width = sizePlayer;
+        sprite.height = sizePlayer;
+        sprite.anchor.set(0.5);
+        sprite.name = `note-permissions-user-${u.id}`;
+        sprite.position.set(
+            -totalWidth / 2 + i * spacing,
+            iconSize / 2 + verticalOffset + sizePlayer / 2
+        );
 
-        const tex = PIXI.Texture.from(iconPath);
-        const flag = new PIXI.Sprite(tex);
-        flag.tint = PIXI.utils.string2hex(user.color || "#ffffff");
-        flag.width = sizePlayer;
-        flag.height = sizePlayer;
-        flag.anchor.set(0.5);
-        flag.name = `note-permissions-user-${userId}`;
-        const x = -totalFlagsWidth / 2 + index * spacing;
-        const y = iconSize / 2 + verticalOffset + sizePlayer / 2;
-        flag.position.set(x, y);
-        note.addChild(flag);
+        note.addChild(sprite);
     });
 }
 
 Hooks.once("init", registerSettings);
 
-Hooks.on("drawNote", drawCustomPermissionIcons);
-
-Hooks.on("updateNote", async (noteDoc) => {
-    if (!game.user.isGM) return;
-    await updateNoteFlags(noteDoc);
-    const note = canvas.notes.get(noteDoc.id);
-    if (note) drawCustomPermissionIcons(note);
-});
-
-Hooks.on("createNote", async (noteDoc) => {
-    if (!game.user.isGM) return;
-    await updateNoteFlags(noteDoc);
-});
-
-Hooks.once("ready", async () => {
+Hooks.once("ready", () => {
     if (!game.user.isGM) return;
     for (const note of canvas.notes.placeables) {
-        await updateNoteFlags(note.document);
-        drawCustomPermissionIcons(note);
+        drawIcons(note);
     }
 });
+
+Hooks.on("drawNote", drawIcons);
