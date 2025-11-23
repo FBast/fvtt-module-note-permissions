@@ -10,40 +10,47 @@
 
 - Automatically shows a **default permission icon** above each note based on the effective access level (page + entry).
 - Displays **individual user permissions** below each note using color-coded icons.
-- Uses customizable **SVG shapes** for different permission levels:
-  - `LIMITED` → Square
-  - `OBSERVER` → Circle
-  - `OWNER` → Star
-  - `INHERIT` → Triangle
-- Provides configurable settings for icon size and color via the Foundry settings menu.
-- Purely cosmetic and non-intrusive: no system overrides or journal modifications.
+- Uses customizable **SVG shapes** to represent permission levels:
+  - `LIMITED` → Square  
+  - `OBSERVER` → Circle  
+  - `OWNER` → Star  
+  - `INHERIT` → Triangle  
+- Provides configurable settings for icon size and color via Foundry’s Module Settings.
+- Purely cosmetic and non-intrusive — no overrides, no patching, and no journal modifications.
 
 ## Installation
-1. Install the module using the Foundry Add-on Modules menu.
-#### Or
-1. Download and unzip the module into your `FoundryVTT/Data/modules` folder.
-#### Then
-2. Enable the module via `Settings > Manage Modules`.
-3. Configure your preferred icon sizes and default color in `Settings > Module Settings > Note Permissions`.
+
+The module can be installed **directly from within Foundry VTT**:
+
+1. Open **Foundry VTT**.
+2. Go to **Configuration & Setup → Add-on Modules**.
+3. Click **Install Module**.
+4. Search for **Note Permissions**.
+5. Click **Install**.
+
+Once installed, enable the module via **Settings → Manage Modules**.
 
 ## Usage
 
-- When a GM places or draws a **journal note**, icons will automatically appear above (default permission) and below (per-user overrides) the note icon.
+- When a GM places or draws a **journal note**, icons automatically appear:
+  - Above the note → the **default permission level**.
+  - Below the note → **user-specific overrides**, color-coded by player.
 - Changing ownership settings on a journal entry or page updates the icons in real time.
+- Icons adjust dynamically based on configured sizes and colors.
 
 ## Settings
 
-- **Default Icon Color** – Sets the tint for the default permission icon.  
-- **Default Icon Size** – Size in pixels for the default permission icon.  
-- **Player Icon Size** – Size in pixels for user-specific icons.  
+- **Default Icon Color** – Tint applied to the default permission icon.  
+- **Default Icon Size** – Pixel size for the default permission icon.  
+- **Player Icon Size** – Pixel size for user-specific icons.  
 
-All settings are **world-scoped** and visible to GMs only.
+All settings are **world-scoped** and visible only to GMs.
 
 ## Compatibility
 
-- ✅ Compatible with Foundry VTT **v12**
-- 🎲 System-agnostic
-- 🧩 Designed for `JournalEntryPage`
+- Compatible with **Foundry VTT v12 and v13**
+- System-agnostic
+- Designed specifically for **JournalEntryPage**
 
 ## License
 
